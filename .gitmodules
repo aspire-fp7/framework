@@ -1,0 +1,3 @@
+[submodule "diablo"]
+	path = diablo
+	url = https://github.com/diablo-rewriter/diablo
