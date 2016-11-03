@@ -1,3 +1,15 @@
 [submodule "diablo"]
 	path = diablo
 	url = https://github.com/diablo-rewriter/diablo
+[submodule "code-mobility"]
+	path = code-mobility
+	url = https://github.com/uel-aspire-fp7/code-mobility.git
+[submodule "ascl"]
+	path = ascl
+	url = https://github.com/uel-aspire-fp7/ascl.git
+[submodule "accl"]
+	path = accl
+	url = https://github.com/uel-aspire-fp7/accl.git
+[submodule "annotation_extractor"]
+	path = annotation_extractor
+	url = https://github.com/aspire-fp7/annotation_extractor.git
