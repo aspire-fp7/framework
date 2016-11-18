@@ -13,3 +13,6 @@
 [submodule "annotation_extractor"]
 	path = annotation_extractor
 	url = https://github.com/aspire-fp7/annotation_extractor.git
+[submodule "code-guards"]
+	path = code-guards
+	url = https://github.com/aspire-fp7/code-guards
