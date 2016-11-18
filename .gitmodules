@@ -19,3 +19,6 @@
 [submodule "renewability"]
 	path = renewability
 	url = https://github.com/uel-aspire-fp7/renewability
+[submodule "remote-attestation"]
+	path = remote-attestation
+	url = https://github.com/aspire-fp7/remote-attestation
