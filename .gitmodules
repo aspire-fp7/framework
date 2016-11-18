@@ -16,3 +16,6 @@
 [submodule "code-guards"]
 	path = code-guards
 	url = https://github.com/aspire-fp7/code-guards
+[submodule "renewability"]
+	path = renewability
+	url = https://github.com/uel-aspire-fp7/renewability
