@@ -22,3 +22,6 @@
 [submodule "remote-attestation"]
 	path = remote-attestation
 	url = https://github.com/aspire-fp7/remote-attestation
+[submodule "actc"]
+	path = actc
+	url = https://github.com/aspire-fp7/actc
