@@ -13,20 +13,17 @@ with the ASPIRE Compiler Tool Chain (ACTC).
 We assume that you have already Docker installed on your machine. If not,
 you can follow the instructions from the [Docker website](https://www.docker.com/).
 
-To set up an ASPIRE Docker container, you have to clone the repository that contains the base Docker files,
-which is located at [https://github.com/aspire-fp7/docker](https://github.com/aspire-fp7/docker):
+To set up an ASPIRE Docker container, you just have to clone this repository which contains the base Docker file. As
+all the actual tools (and Docker support files) are linked into this repository with git submodules, you'll also
+have to initialize the git submodules in addition to cloning this repository:
 
-    # git clone https://github.com/aspire-fp7/docker/
+    # git clone https://github.com/aspire-fp7/framework/
+    # cd framework
+    # git submodule update --init
 
-This repository contains the Docker file, and contains some useful scripts. Running the
-`build.sh` script fetches the correct ASPIRE repositories from GitHub
-to the directory given as argument (which is automatically cleaned), and proceeds to build the ASPIRE docker
-image called *aspire*:
+This repository contains the Docker file. To build a ASPIRE docker image called *aspire*, just run the following command in this directory:
 
-    # cd docker
-    # mkdir actc
-    # cd actc
-    # ../build.sh .
+    # docker build -t aspire
 
 When building the Docker container, most ASPIRE projects are built from scratch
 inside the container.
@@ -46,17 +43,17 @@ been built with Diablo-compatible tool chains. These can be rebuilt
 from source by cloning the [https://github.com/aspire-fp7/3rd_party/](https://github.com/aspire-fp7/3rd_party/) repository
 and following the instructions in the `README.MD` file.
 
-This script also prepares a 'projects' directory which already has the actc-demos repository
-checked out into it. It is one of the samples in that demos repository that we will
-be using in the remainder of this manual.
-
 ## Starting the Docker
 We have provided a script to start the Docker container with the correct parameters:
 
-    # ./run.sh
+    # ./docker/run.sh
     root@33f36aef63c2:/projects# 
 
-This opens a bash shell in the *aspire* container in which we will
+First, this script prepares a 'projects' directory which already has the actc-demos repository
+checked out into it. It is one of the samples in that demos repository that we will
+be using in the remainder of this manual.
+
+Next, the script opens a bash shell in the *aspire* container in which we will
 be executing all further commands. Furthermore, this script sets up the correct
 ports on your Docker container for
 the online protection techniques. Finally, it maps the `projects/`
@@ -259,3 +256,18 @@ to demonstrate code mobility, and check the attestation logs on the server:
 This shows that the protected application indeed connected to the server, and
 that the server sent an annotation request back to this client, and that
 this client successfully responded to that request.
+
+## Doing development with this Docker container
+
+When you're playing with the Docker container and want to edit the sources of one of
+the tools, it can be handy to have changes made in your host immediately propagate
+to the Docker, and vice versa. To make this easier, we have provided a script
+that should be run *inside* the container, which enables you to do so:
+
+    # /opt/framework/docker/development.sh
+
+The initial `run.sh` script already sets up Docker volumes in `/opt/development`
+that refer to the directories of all the tools on your host. The `development.sh`
+script then switches copies over all changes (and builds) made in your Docker
+container to those volumes with `rsync`, and then updates `/opt/framework` to be
+a symlink to `/opt/development`.
