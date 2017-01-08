@@ -23,7 +23,7 @@ have to initialize the git submodules in addition to cloning this repository:
 
 This repository contains the Docker file. To build a ASPIRE docker image called *aspire*, just run the following command in this directory:
 
-    # docker build -t aspire
+    # docker build -t aspire .
 
 When building the Docker container, most ASPIRE projects are built from scratch
 inside the container.
