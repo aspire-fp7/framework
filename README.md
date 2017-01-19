@@ -97,6 +97,10 @@ and *code guards*.
 We only need to
 enable their application in the configuration file of the ACTC.
 
+Annotations can be added and modified at will. Their syntax and semantics are
+described in detail in the appendices of the
+[ASPIRE Framework report](https://aspire-fp7.eu/sites/default/files/D5.11-ASPIRE-Framework-Report.pdf).
+
 The configuration file is a JSON file that can be edited easily. The Docker container
 has vim installed, but of course you can use any editor of your liking.
 
@@ -271,3 +275,11 @@ that refer to the directories of all the tools on your host. The `development.sh
 script then switches copies over all changes (and builds) made in your Docker
 container to those volumes with `rsync`, and then updates `/opt/framework` to be
 a symlink to `/opt/development`.
+
+## Further reading
+
+These are some documents describing parts of the framework and its components in more detail:
+
+* [Reference architecture](https://aspire-fp7.eu/sites/default/files/D1.04-ASPIRE-Reference-Architecture-v2.1.pdf) Describes the architectural design of the ASPIRE protections and the communication logic for the client and server components of the protections.
+* [ASPIRE Framework report](https://aspire-fp7.eu/sites/default/files/D5.11-ASPIRE-Framework-Report.pdf) Documents the ASPIRE tool chain and decision support components in exhaustive detail. This document furthermore documents the supported protection annotations.
+* [ASPIRE Open Source Manual](https://aspire-fp7.eu/sites/default/files/D5.13-ASPIRE-Open-Source-Manual.pdf) Contains manuals for the framework (which is an older version of this README), and documentation of the ADSS Full.
