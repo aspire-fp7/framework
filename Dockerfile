@@ -28,6 +28,7 @@ COPY docker/online/mysql-pre-setup.sh /tmp/mysql-pre-setup.sh
 # This has to run before the mysql-server installs as it sets the default password
 RUN \
  /tmp/mysql-pre-setup.sh && \
+  apt-get update && \
   apt-get install -y mysql-client mysql-server 
 
 COPY docker/online/nginx-default /etc/nginx/sites-available/default
