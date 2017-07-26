@@ -25,6 +25,3 @@
 [submodule "actc"]
 	path = actc
 	url = https://github.com/aspire-fp7/actc
-[submodule "docker"]
-	path = docker
-	url = https://github.com/aspire-fp7/docker
