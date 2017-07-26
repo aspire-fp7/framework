@@ -42,16 +42,8 @@ RUN \
   mkdir -p /opt/framework_buildtime && \
   ln -s /opt/framework_buildtime /opt/framework
 
-# TODO copy in one go?
-COPY accl/ /opt/framework/accl
-COPY actc/ /opt/framework/actc
-COPY annotation_extractor/ /opt/framework/annotation_extractor
-COPY ascl/ /opt/framework/ascl
-COPY code-guards/ /opt/framework/code-guards
-COPY code-mobility/ /opt/framework/code-mobility
-COPY diablo/ /opt/framework/diablo
-COPY remote-attestation/ /opt/framework/remote-attestation
-COPY renewability/ /opt/framework/renewability
+# Copy the modules and docker directory
+COPY modules/ /opt/framework/
 COPY docker/ /opt/framework/docker
 
 RUN /opt/framework/docker/build.sh

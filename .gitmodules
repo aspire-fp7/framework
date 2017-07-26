@@ -1,27 +1,27 @@
 [submodule "diablo"]
-	path = diablo
+	path = modules/diablo
 	url = https://github.com/diablo-rewriter/diablo
 [submodule "code-mobility"]
-	path = code-mobility
+	path = modules/code-mobility
 	url = https://github.com/uel-aspire-fp7/code-mobility.git
 [submodule "ascl"]
-	path = ascl
+	path = modules/ascl
 	url = https://github.com/uel-aspire-fp7/ascl.git
 [submodule "accl"]
-	path = accl
+	path = modules/accl
 	url = https://github.com/uel-aspire-fp7/accl.git
 [submodule "annotation_extractor"]
-	path = annotation_extractor
+	path = modules/annotation_extractor
 	url = https://github.com/aspire-fp7/annotation_extractor.git
 [submodule "code-guards"]
-	path = code-guards
+	path = modules/code-guards
 	url = https://github.com/aspire-fp7/code-guards
 [submodule "renewability"]
-	path = renewability
+	path = modules/renewability
 	url = https://github.com/uel-aspire-fp7/renewability
 [submodule "remote-attestation"]
-	path = remote-attestation
+	path = modules/remote-attestation
 	url = https://github.com/aspire-fp7/remote-attestation
 [submodule "actc"]
-	path = actc
+	path = modules/actc
 	url = https://github.com/aspire-fp7/actc

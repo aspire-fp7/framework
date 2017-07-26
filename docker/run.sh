@@ -15,16 +15,16 @@ add_volume() {
 
 if [ "${DEVELOPER_MODE}" == "yes" ]
 then
-  add_volume accl
-  add_volume actc
-  add_volume annotation_extractor
-  add_volume ascl
-  add_volume code-guards
-  add_volume code-mobility
-  add_volume diablo
+  # Add a volume for every module
+  cd modules
+  for module in $(ls);
+  do
+    add_volume $module
+  done
+  cd ..
+
+  # Add a volume for docker
   add_volume docker
-  add_volume remote-attestation
-  add_volume renewability
 fi
 
 if [ "${DEMO_PROJECTS}" == "yes" ]
