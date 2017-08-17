@@ -25,7 +25,7 @@ diablo() {
   mkdir -p /opt/framework/diablo/build/
   cd /opt/framework/diablo/build/
   cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/framework/diablo/install ..
-  make
+  make -j$(nproc)
   make install
 
   if [ ! -f /opt/diablo ]
