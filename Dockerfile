@@ -48,8 +48,6 @@ COPY docker/ /opt/framework/docker
 
 RUN /opt/framework/docker/build.sh
 
-RUN mkdir /opt/development
-
 # EXPOSE 8088
 EXPOSE 8080-8099
 EXPOSE 18001
