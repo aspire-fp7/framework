@@ -70,7 +70,7 @@ toolchains() {
 }
 
 thirdparty() {
-  echo "Installint third-party libraries..."
+  echo "Installing third-party libraries..."
 
   mkdir -p /opt/3rd_party
   cd /opt/3rd_party
