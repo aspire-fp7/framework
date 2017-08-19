@@ -28,3 +28,6 @@
 [submodule "llvm"]
 	path = modules/llvm
 	url = https://github.com/csl-ugent/llvm.git
+[submodule "semantic_renewability"]
+	path = modules/semantic_renewability
+	url = https://github.com/csl-ugent/semantic-renewability.git

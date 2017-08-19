@@ -15,6 +15,7 @@ setup_symlinks() {
   ln -s /opt/framework/actc/src/ /opt/ACTC
   ln -s /opt/framework/annotation_extractor /opt/annotation_extractor
   ln -s /opt/framework/code_guards /opt/codeguard
+  ln -s /opt/framework/semantic_renewability /opt/semantic_renewability
 }
 
 accl() {

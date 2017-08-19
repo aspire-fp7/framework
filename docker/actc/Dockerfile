@@ -46,7 +46,9 @@ RUN \
   # UWSGI interface \
   apt-get install -y uwsgi-plugin-python && \
   # Development \
-  apt-get install -y bison cmake flex gdb
+  apt-get install -y bison cmake flex gdb && \
+  # Semantic renewability \
+  apt-get install -y python3
 
 # Install the prebuilts
 COPY docker/actc/install_prebuilts.sh docker/actc/patch_gcc.sh /tmp/

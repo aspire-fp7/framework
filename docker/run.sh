@@ -21,4 +21,4 @@ fi
 docker-compose up -d
 
 COMMAND="${@:1}"
-docker-compose exec actc /opt/ACTC/actc.py ${COMMAND}
+docker-compose exec actc /opt/semantic_renewability/main.py ${COMMAND}
