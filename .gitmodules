@@ -25,3 +25,6 @@
 [submodule "actc"]
 	path = modules/actc
 	url = https://github.com/aspire-fp7/actc
+[submodule "llvm"]
+	path = modules/llvm
+	url = https://github.com/csl-ugent/llvm.git

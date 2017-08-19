@@ -24,6 +24,14 @@ if [ ! -d /build/diablo ]; then
   make -j$(nproc) install
 fi
 
+# Build LLVM
+if [ ! -d /build/llvm ]; then
+  mkdir -p /build/llvm
+  cd /build/llvm
+  cmake -DC_INCLUDE_DIRS=/usr/include -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/opt/diablo-llvm-toolchain -DDIABLO_TC_REV="\"llvm-DiabloTC-TODO\"" /opt/framework/llvm
+  make -j$(nproc) install
+fi
+
 # Start the actual shell
 cd $OLD_PWD
 bash

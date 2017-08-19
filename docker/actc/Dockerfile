@@ -14,6 +14,21 @@ RUN \
   cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/diablo -DUseInstallPrefixForLinkerScripts=on .. && \
   make -j$(nproc) install
 
+# Build LLVM toolchain
+FROM ubuntu:14.04 as llvm-builder
+
+# Install the required packages
+RUN \
+  apt-get update && \
+  apt-get install -y cmake g++ python
+
+COPY modules/llvm /tmp/llvm/
+RUN \
+  mkdir -p /tmp/llvm/build/ && \
+  cd /tmp/llvm/build/ && \
+  cmake -DC_INCLUDE_DIRS=/usr/include -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/diablo-llvm-toolchain -DDIABLO_TC_REV="\"llvm-DiabloTC-TODO\"" .. && \
+  make -j$(nproc) install
+
 # Actual docker image
 FROM debian:stretch
 ARG DEBIAN_FRONTEND=noninteractive
@@ -37,8 +52,9 @@ RUN \
 COPY docker/actc/install_prebuilts.sh docker/actc/patch_gcc.sh /tmp/
 RUN /tmp/install_prebuilts.sh
 
-# Install Diablo
+# Install Diablo and LLVM
 COPY --from=diablo-builder /opt/diablo /opt/diablo
+COPY --from=llvm-builder /opt/diablo-llvm-toolchain /opt/diablo-llvm-toolchain
 
 # Copy the modules and install them
 RUN mkdir -p /opt/framework_buildtime && ln -s /opt/framework_buildtime /opt/framework
