@@ -8,7 +8,6 @@ RUN \
 RUN \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get update && \
-  apt-get -y upgrade && \
   # DIABLO \
   apt-get install -y build-essential && \
   apt-get install -y software-properties-common && \
