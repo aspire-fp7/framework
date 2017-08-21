@@ -4,7 +4,7 @@ set -o pipefail
 set -o nounset
 #set -o xtrace
 
-git submodule update --init
+git submodule update --init --recursive
 
 echo
 read -r -p "Would you like to include the anti-debugging protection? (y/N)" response
