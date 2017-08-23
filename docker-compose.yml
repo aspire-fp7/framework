@@ -1,0 +1,10 @@
+version: '3'
+services:
+  aspire:
+    build: .
+    ports:
+      - "8080-8099:8080-8099"
+      - "18001:18001"
+    volumes:
+      - "./projects:/projects"
+    working_dir: "/projects"

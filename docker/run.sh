@@ -40,9 +40,4 @@ then
  fi
 fi
 
-docker run -ti \
-  -v ${PWD}/projects/:/projects --workdir /projects/ \
-  ${ADDITIONALVOLUMES} \
-  -p 8080-8099:8080-8099 -p 18001:18001 \
-  aspire \
-  bash
+docker-compose run --service-ports ${ADDITIONALVOLUMES} aspire

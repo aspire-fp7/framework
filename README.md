@@ -22,9 +22,10 @@ will also query you to (optionally) install additional support for anti-debuggin
     # cd framework
     # ./setup.sh
 
-This repository contains the Docker file. To build a ASPIRE docker image called *aspire*, just run the following command in this directory:
+This repository contains the Dockerfile and docker-compose.yml files. To build the ASPIRE docker service, at least version 1.13 of
+docker-compose is required. When the right version of docker-compose is installed, you just run the following command in this directory:
 
-    # docker build -t aspire .
+    # docker-compose build aspire
 
 When building the Docker container, most ASPIRE projects are built from scratch
 inside the container.
