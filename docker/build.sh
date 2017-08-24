@@ -6,8 +6,6 @@ set -u
 CLEAN=no
 
 clean() {
-  rm -rf /opt/framework/diablo/build/
-  rm /opt/diablo
   rm -rf /opt/diablo/obj/
   rm -f /opt/framework/diablo/self-profiling/*.o
   rm -f /tmp/linux*
@@ -17,21 +15,6 @@ clean() {
   rm -rf /opt/3rd_party
 
   # TODO /opt/framework/renewability/build.sh /opt/RA/setup/remote_attestation_setup.sh ACCL / ASCL
-}
-
-diablo() {
-  echo "Building Diablo..."
-
-  mkdir -p /opt/framework/diablo/build/
-  cd /opt/framework/diablo/build/
-  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/framework/diablo/install ..
-  make -j$(nproc)
-  make install
-
-  if [ ! -f /opt/diablo ]
-  then
-    ln -s /opt/framework/diablo/install/bin /opt/diablo
-  fi
 }
 
 diablo_selfprofiling() {
@@ -157,7 +140,6 @@ setup_symlinks
 
 toolchains
 [ -d /opt/framework/anti-debugging ] && anti_debugging
-diablo
 diablo_selfprofiling
 thirdparty
 

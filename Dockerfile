@@ -1,18 +1,30 @@
+# Build Diablo
+FROM ubuntu:14.04 as diablo-builder
+
+# Install the required packages
+RUN \
+  apt-get update && \
+  apt-get install -y bison build-essential cmake flex
+
+COPY modules/diablo /tmp/diablo/
+RUN \
+  mkdir -p /tmp/diablo/build/ && \
+  cd /tmp/diablo/build/ && \
+  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/diablo -DUseInstallPrefixForLinkerScripts=on .. && \
+  make -j$(nproc) install
+
+# Actual docker image
 FROM ubuntu:14.04
 
-# The i386, and installs of binutils-multiarch gcc-multilib zlib1g:i386 are workarounds for the 32 bit Android toolchain
-RUN \
-  dpkg --add-architecture i386
+COPY --from=diablo-builder /opt/diablo /opt/diablo
 
-# Install.
 RUN \
+  # The i386, and installs of binutils-multiarch gcc-multilib zlib1g:i386 are workarounds for the 32 bit Android toolchain
+  dpkg --add-architecture i386 && \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get update && \
-  # DIABLO \
-  apt-get install -y build-essential && \
   apt-get install -y software-properties-common && \
   apt-get install -y byobu curl git htop man unzip vim wget && \
-  apt-get install -y cmake bison flex && \
   apt-get install -y binutils-multiarch gcc-multilib zlib1g:i386 && \
   # ACTC \
   apt-get install -y python python-pip && \
