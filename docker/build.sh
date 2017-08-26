@@ -110,10 +110,6 @@ communications() {
   /opt/framework/ascl/build.sh
   ln -s /opt/ASCL/obj/linux_x86 /opt/ASCL/obj/serverlinux
 
-
-  echo "Building ACCL..."
-  /opt/framework/accl/build.sh
-
   echo "Setup of server..."
   /tmp/nginx-setup.sh
   pip install uwsgi
