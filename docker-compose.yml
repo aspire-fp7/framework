@@ -7,4 +7,7 @@ services:
       - "18001:18001"
     volumes:
       - "./projects:/projects"
+      - "root_home:/root"
     working_dir: "/projects"
+volumes:
+  root_home:
