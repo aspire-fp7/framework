@@ -267,16 +267,17 @@ this client successfully responded to that request.
 
 When you're playing with the Docker container and want to edit the sources of one of
 the tools, it can be handy to have changes made in your host immediately propagate
-to the Docker, and vice versa. To make this easier, we have provided a script
-that should be run *inside* the container, which enables you to do so:
+to the Docker, and vice versa. To make this easier, we have provided the option of
+running the container in development mode. This can be enabled by setting the
+`DEVELOPER_MODE` variable before running the docker, like so:
 
-    # /opt/framework/docker/development.sh
+    # export DEVELOPER_MODE=yes
 
-The initial `run.sh` script already sets up Docker volumes in `/opt/development`
-that refer to the directories of all the tools on your host. The `development.sh`
-script then switches copies over all changes (and builds) made in your Docker
-container to those volumes with `rsync`, and then updates `/opt/framework` to be
-a symlink to `/opt/development`.
+When starting the container with the `run.sh` script this sets up Docker volumes in
+`/opt/development` that refer to the directories of all the tools on your host.
+`/opt/framework` is then updated to be a symlink to `/opt/development`, and Diablo is
+built from (development) source. This build happens on a named volume (located at /build
+in the Docker) so that it has to happen only once, and incremental builds are easy.
 
 ## Further reading
 

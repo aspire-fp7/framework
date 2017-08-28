@@ -30,8 +30,10 @@ RUN \
   apt-get install -y python python-pip && \
   pip install doit==0.29.0 && \
   # ONLINE TECHNIQUES \
-  apt-get install -y nginx php5-fpm python-dev libmysqlclient18 libmysqlclient-dev openjdk-7-jre binutils-dev tree
+  apt-get install -y nginx php5-fpm python-dev libmysqlclient18 libmysqlclient-dev openjdk-7-jre binutils-dev tree && \
 # Warning: MySQL gets installed later on, because first the default pw is set
+  # Development \
+  apt-get install -y bison cmake flex gdb
 
 COPY docker/diablo/ /tmp/
 COPY docker/online/mysql-pre-setup.sh /tmp/mysql-pre-setup.sh
