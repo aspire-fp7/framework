@@ -3,20 +3,6 @@
 set -e
 set -u
 
-CLEAN=no
-
-clean() {
-  rm -rf /opt/diablo/obj/
-  rm -f /opt/framework/diablo/self-profiling/*.o
-  rm -f /tmp/linux*
-  rm -rf /opt/diablo-gcc-toolchain
-  rm -f /tmp/android*
-  rm -rf /opt/diablo-android-gcc-toolchain
-  rm -rf /opt/3rd_party
-
-  # TODO /opt/framework/renewability/build.sh /opt/RA/setup/remote_attestation_setup.sh ACCL / ASCL
-}
-
 diablo_selfprofiling() {
   echo "Building Diablo-Selfprofiling..."
 
