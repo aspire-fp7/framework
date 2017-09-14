@@ -21,9 +21,6 @@ fi
 #        cp $DIR/aspire_ascl.conf /etc/nginx/conf.d/aspire_ascl.conf
 #fi
 
-#BART
-sed --in-place -e 's/uid = aspire/uid = root/' /opt/ASCL/aspire-portal/aspire-portal.ini
-
 chown -R $(whoami):$(id -g -n) /usr/share/nginx/www
 /etc/init.d/php5-fpm reload
 /etc/init.d/nginx restart

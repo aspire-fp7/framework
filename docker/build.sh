@@ -75,14 +75,15 @@ setup_symlinks() {
   ln -s /opt/framework/ascl/src /opt/ASCL/src
   ln -s /opt/framework/ascl/src /opt/ASCL/include
   ln -s /opt/framework/ascl/src/aspire-portal /opt/ASCL/aspire-portal
-  ln -s /opt/framework/ascl/prebuilt /opt/ASCL/obj
-  ln -s /opt/framework/code-mobility /opt/code_mobility
-  ln -s /opt/framework/remote-attestation /opt/RA
+  mkdir -p /opt/RA
+  mkdir -p /opt/RA/obj
+  ln -s /opt/framework/remote-attestation/{deploy,setup,scripts,src} /opt/RA/
+  mkdir -p /opt/code_mobility
   ln -s /opt/code_mobility/prebuilt/ /opt/code_mobility/downloader
   ln -s /opt/code_mobility/prebuilt/ /opt/code_mobility/binder
-  ln -s /opt/framework/accl/ /opt/ACCL
-  ln -s /opt/framework/accl/prebuilt/ /opt/ACCL/obj
+  mkdir -p /opt/ACCL
   ln -s /opt/framework/accl/src/ /opt/ACCL/include
+  ln -s /opt/framework/accl/src/ /opt/ACCL/src
   ln -s /opt/framework/actc/src/ /opt/ACTC
 }
 
@@ -90,7 +91,7 @@ communications() {
   echo "Building Communications libraries..."
 
   echo "  Building ASCL..."
-  /opt/framework/ascl/build.sh
+  /opt/framework/ascl/build.sh /opt/ASCL/obj
   ln -s /opt/ASCL/obj/linux_x86 /opt/ASCL/obj/serverlinux
 
   echo "Setup of server..."
@@ -100,29 +101,26 @@ communications() {
 
 anti_debugging() {
   echo "Building anti-debugging..."
-  ln -s /opt/framework/anti-debugging /opt/anti_debugging
-  /opt/framework/anti-debugging/build.sh
+  /opt/framework/anti-debugging/build.sh /opt/anti_debugging
 }
 
 codemobility() {
   echo "Building code mobility..."
 
-  find /opt/framework/code-mobility/ | grep Makefile | xargs sed --in-place "s/-Werror//"
-
   cd /opt/framework/code-mobility/src/mobility_server
 
-  ln -s /opt/code_mobility/scripts/deploy_application.sh /opt/code_mobility/
+  ln -s /opt/framework/code-mobility/scripts/deploy_application.sh /opt/code_mobility/
   chmod a+x /opt/code_mobility/deploy_application.sh
-  sed --in-place -e 's#/opt/code_mobility/mobility_server/mobility_server#/opt/code_mobility/prebuilt/bin/x86/mobility_server#' /opt/ASCL/aspire-portal/backends.json
-  /opt/framework/code-mobility/build.sh
+  /opt/framework/code-mobility/build.sh /opt/code_mobility/prebuilt
 }
 
 renewability() {
   echo "Building renewability..."
 
   /etc/init.d/mysql restart || true
-  /opt/framework/renewability/build.sh
-  ln -s /opt/framework/renewability /opt/renewability
+  /opt/framework/renewability/build.sh /opt/renewability
+  ln -s /opt/framework/renewability/scripts/ /opt/renewability/
+  ln -s /opt/framework/renewability/setup/ /opt/renewability/
   chmod a+x /opt/renewability/scripts/create_new_revision.sh
   /opt/renewability/setup/database_setup.sh
 }
@@ -131,7 +129,7 @@ RA() {
   echo "Building remote attestation..."
 
   /etc/init.d/mysql restart || true
-  /opt/RA/setup/remote_attestation_setup.sh
+  /opt/framework/remote-attestation/setup/remote_attestation_setup.sh
   cd /opt/RA/obj
   ../setup/generate_racommons.sh -o .
 }
