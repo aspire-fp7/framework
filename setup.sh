@@ -13,5 +13,5 @@ then
   cd modules/
   git clone https://github.ugent.be/SysLab/anti-debugging.git
   cd anti-debugging
-  git checkout 631a935e71caf8cf6d7bde5555925b412b080239
+  git checkout bf8e72b3f63b45650da2feb00918c017cde219de
 fi
