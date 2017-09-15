@@ -119,12 +119,6 @@ anti_debugging() {
   echo "Building anti-debugging..."
   ln -s /opt/framework/anti-debugging /opt/anti_debugging
   /opt/framework/anti-debugging/build.sh
-
-  # Copy extra diablo source files
-  for f in $(ls /opt/anti_debugging/diablo/)
-  do
-    ln -s /opt/anti_debugging/diablo/$f /opt/framework/diablo/aspire/self_debugging/
-  done
 }
 
 codemobility() {

@@ -11,7 +11,9 @@ read -r -p "Would you like to include the anti-debugging protection? (y/N)" resp
 if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
 then
   cd modules/
+  MODULES_DIR=$PWD
   git clone https://github.ugent.be/SysLab/anti-debugging.git
   cd anti-debugging
   git checkout bf8e72b3f63b45650da2feb00918c017cde219de
+  cp diablo/* $MODULES_DIR/diablo/aspire/self_debugging/
 fi
