@@ -86,8 +86,8 @@ communications() {
 }
 
 anti_debugging() {
-  echo "Building anti-debugging..."
-  /opt/framework/anti-debugging/build.sh /opt/anti_debugging
+  echo "Building anti_debugging..."
+  /opt/framework/anti_debugging/build.sh /opt/anti_debugging
 }
 
 codemobility() {
@@ -123,7 +123,7 @@ RA() {
 setup_symlinks
 
 toolchains
-[ -d /opt/framework/anti-debugging ] && anti_debugging
+[ -d /opt/framework/anti_debugging ] && anti_debugging
 diablo_selfprofiling
 thirdparty
 

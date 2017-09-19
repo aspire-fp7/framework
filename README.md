@@ -16,7 +16,7 @@ you can follow the instructions from the [Docker website](https://www.docker.com
 To set up an ASPIRE Docker container, you just have to clone this repository which contains the base Docker file. As
 all the actual tools (and Docker support files) are linked into this repository with git submodules, you'll also
 have to initialize the git submodules in addition to cloning this repository. We use a separate script for this, which
-will also query you to (optionally) install additional support for anti-debugging.
+will also query you to (optionally) install additional support for anti_debugging.
 
     # git clone https://github.com/aspire-fp7/framework/
     # cd framework

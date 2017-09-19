@@ -1,4 +1,4 @@
-modules/anti-debugging
+modules/anti_debugging
 projects
 *.sublime*
 *swp
