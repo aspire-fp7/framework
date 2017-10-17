@@ -35,7 +35,6 @@ RUN \
   # Development \
   apt-get install -y bison cmake flex gdb
 
-COPY docker/diablo/ /tmp/
 COPY docker/online/mysql-pre-setup.sh /tmp/mysql-pre-setup.sh
 
 # This has to run before the mysql-server installs as it sets the default password
@@ -55,11 +54,15 @@ RUN \
   mkdir -p /opt/framework_buildtime && \
   ln -s /opt/framework_buildtime /opt/framework
 
-# Copy the modules and docker directory
-COPY modules/ /opt/framework/
-COPY docker/ /opt/framework/docker
+# Install the prebuilts
+COPY docker/diablo/ /tmp/
+COPY docker/install_prebuilts.sh /opt/framework/docker/
+RUN /opt/framework/docker/install_prebuilts.sh
 
-RUN /opt/framework/docker/build.sh
+# Copy the modules and install them
+COPY modules/ /opt/framework/
+COPY docker/install_modules.sh /opt/framework/docker/
+RUN /opt/framework/docker/install_modules.sh
 
 # EXPOSE 8088
 EXPOSE 8080-8099
