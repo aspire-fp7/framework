@@ -1,2 +1,6 @@
 projects
 .git
+**/*.pyc
+**/*.sw*
+**/*.vim
+**/*~
