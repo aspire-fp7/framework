@@ -17,32 +17,25 @@ diablo_selfprofiling() {
   cp printarm_android.o /opt/diablo/obj/
 }
 
+# Set up the symlinks for the modules that don't require anything special.
 setup_symlinks() {
   echo "Setting up symlinks..."
-
-  ln -s /opt/framework/code-guards /opt/codeguard
-  ln -s /opt/framework/annotation_extractor /opt/annotation_extractor
-  mkdir -p /opt/online_backends/code_mobility/
-  mkdir -p /opt/ASCL
-  ln -s /opt/framework/ascl/src /opt/ASCL/src
-  ln -s /opt/framework/ascl/src /opt/ASCL/include
-  ln -s /opt/framework/ascl/src/aspire-portal /opt/ASCL/aspire-portal
-  mkdir -p /opt/RA
-  mkdir -p /opt/RA/obj
-  ln -s /opt/framework/remote-attestation/{deploy,setup,scripts,src} /opt/RA/
-  mkdir -p /opt/code_mobility
-  ln -s /opt/code_mobility/prebuilt/ /opt/code_mobility/downloader
-  ln -s /opt/code_mobility/prebuilt/ /opt/code_mobility/binder
-  mkdir -p /opt/ACCL
-  ln -s /opt/framework/accl/src/ /opt/ACCL/include
-  ln -s /opt/framework/accl/src/ /opt/ACCL/src
   ln -s /opt/framework/actc/src/ /opt/ACTC
+  ln -s /opt/framework/annotation_extractor /opt/annotation_extractor
+  ln -s /opt/framework/code-guards /opt/codeguard
 }
 
 communications() {
   echo "Building Communications libraries..."
+  mkdir -p /opt/ACCL
+  ln -s /opt/framework/accl/src/ /opt/ACCL/include
+  ln -s /opt/framework/accl/src/ /opt/ACCL/src
 
   echo "  Building ASCL..."
+  mkdir -p /opt/ASCL
+  ln -s /opt/framework/ascl/src /opt/ASCL/src
+  ln -s /opt/framework/ascl/src /opt/ASCL/include
+  ln -s /opt/framework/ascl/src/aspire-portal /opt/ASCL/aspire-portal
   /opt/framework/ascl/build.sh /opt/ASCL/obj
   ln -s /opt/ASCL/obj/linux_x86 /opt/ASCL/obj/serverlinux
 
@@ -58,8 +51,10 @@ anti_debugging() {
 
 codemobility() {
   echo "Building code mobility..."
-
-  cd /opt/framework/code-mobility/src/mobility_server
+  mkdir -p /opt/online_backends/code_mobility/
+  mkdir -p /opt/code_mobility
+  ln -s /opt/code_mobility/prebuilt/ /opt/code_mobility/downloader
+  ln -s /opt/code_mobility/prebuilt/ /opt/code_mobility/binder
 
   ln -s /opt/framework/code-mobility/scripts/deploy_application.sh /opt/code_mobility/
   chmod a+x /opt/code_mobility/deploy_application.sh
@@ -79,6 +74,9 @@ renewability() {
 
 RA() {
   echo "Building remote attestation..."
+  mkdir -p /opt/RA
+  mkdir -p /opt/RA/obj
+  ln -s /opt/framework/remote-attestation/{deploy,setup,scripts,src} /opt/RA/
 
   /etc/init.d/mysql restart || true
   /opt/framework/remote-attestation/setup/remote_attestation_setup.sh
