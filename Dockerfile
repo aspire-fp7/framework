@@ -49,17 +49,13 @@ COPY docker/online/aspire_ascl.conf /etc/nginx/conf.d/aspire_ascl.conf
 # TODO: this file is slightly patched for Docker (and also patches /opt/ASCL/aspire-portal/aspire-portal.ini): make them uniform!
 COPY docker/online/nginx-setup.sh /tmp/nginx-setup.sh
 
-# TODO HACK due to lack of built-time docker -v
-RUN \
-  mkdir -p /opt/framework_buildtime && \
-  ln -s /opt/framework_buildtime /opt/framework
-
 # Install the prebuilts
 COPY docker/diablo/ /tmp/
 COPY docker/install_prebuilts.sh /tmp/
 RUN /tmp/install_prebuilts.sh
 
 # Copy the modules and install them
+RUN mkdir -p /opt/framework_buildtime && ln -s /opt/framework_buildtime /opt/framework
 COPY modules/ /opt/framework/
 COPY docker/install_modules.sh /tmp/
 RUN /tmp/install_modules.sh
