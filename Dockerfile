@@ -56,13 +56,13 @@ RUN \
 
 # Install the prebuilts
 COPY docker/diablo/ /tmp/
-COPY docker/install_prebuilts.sh /opt/framework/docker/
-RUN /opt/framework/docker/install_prebuilts.sh
+COPY docker/install_prebuilts.sh /tmp/
+RUN /tmp/install_prebuilts.sh
 
 # Copy the modules and install them
 COPY modules/ /opt/framework/
-COPY docker/install_modules.sh /opt/framework/docker/
-RUN /opt/framework/docker/install_modules.sh
+COPY docker/install_modules.sh /tmp/
+RUN /tmp/install_modules.sh
 
 # EXPOSE 8088
 EXPOSE 8080-8099
