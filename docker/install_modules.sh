@@ -27,17 +27,12 @@ setup_symlinks() {
 
 communications() {
   echo "Building Communications libraries..."
-  mkdir -p /opt/ACCL
-  ln -s /opt/framework/accl/src/ /opt/ACCL/include
-  ln -s /opt/framework/accl/src/ /opt/ACCL/src
+
+  echo "  Building ACCL..."
+  /opt/framework/accl/build.sh /opt/ACCL
 
   echo "  Building ASCL..."
-  mkdir -p /opt/ASCL
-  ln -s /opt/framework/ascl/src /opt/ASCL/src
-  ln -s /opt/framework/ascl/src /opt/ASCL/include
-  ln -s /opt/framework/ascl/src/aspire-portal /opt/ASCL/aspire-portal
-  /opt/framework/ascl/build.sh /opt/ASCL/obj
-  ln -s /opt/ASCL/obj/linux_x86 /opt/ASCL/obj/serverlinux
+  /opt/framework/ascl/build.sh /opt/ASCL
 
   echo "Setup of server..."
   /tmp/nginx-setup.sh
@@ -51,14 +46,7 @@ anti_debugging() {
 
 codemobility() {
   echo "Building code mobility..."
-  mkdir -p /opt/online_backends/code_mobility/
-  mkdir -p /opt/code_mobility
-  ln -s /opt/code_mobility/prebuilt/ /opt/code_mobility/downloader
-  ln -s /opt/code_mobility/prebuilt/ /opt/code_mobility/binder
-
-  ln -s /opt/framework/code-mobility/scripts/deploy_application.sh /opt/code_mobility/
-  chmod a+x /opt/code_mobility/deploy_application.sh
-  /opt/framework/code-mobility/build.sh /opt/code_mobility/prebuilt
+  /opt/framework/code-mobility/build.sh /opt/code_mobility
 }
 
 renewability() {
@@ -66,22 +54,14 @@ renewability() {
 
   /etc/init.d/mysql restart || true
   /opt/framework/renewability/build.sh /opt/renewability
-  ln -s /opt/framework/renewability/scripts/ /opt/renewability/
-  ln -s /opt/framework/renewability/setup/ /opt/renewability/
-  chmod a+x /opt/renewability/scripts/create_new_revision.sh
   /opt/renewability/setup/database_setup.sh
 }
 
 RA() {
   echo "Building remote attestation..."
-  mkdir -p /opt/RA
-  mkdir -p /opt/RA/obj
-  ln -s /opt/framework/remote-attestation/{deploy,setup,scripts,src} /opt/RA/
 
   /etc/init.d/mysql restart || true
-  /opt/framework/remote-attestation/setup/remote_attestation_setup.sh
-  cd /opt/RA/obj
-  ../setup/generate_racommons.sh -o .
+  /opt/framework/remote-attestation/build.sh /opt/RA
 }
 
 setup_symlinks
