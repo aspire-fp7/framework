@@ -14,6 +14,6 @@ then
   MODULES_DIR=$PWD
   git clone https://github.ugent.be/SysLab/anti-debugging.git anti_debugging
   cd anti_debugging
-  git checkout 09268988f015c28bcd7d6dec70543f9e21aa73c7
+  git checkout 18461ad3dd4d5eb75d4f04813962e95cce1a74b6
   cp diablo/* $MODULES_DIR/diablo/aspire/self_debugging/
 fi
