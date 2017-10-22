@@ -10,8 +10,10 @@ services:
     volumes:
       - "./projects:/projects"
       - "build:/build"
+      - "online_backends:/opt/online_backends"
       - "root_home:/root"
     working_dir: "/projects"
 volumes:
   build:
+  online_backends:
   root_home:
