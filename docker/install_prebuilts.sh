@@ -31,12 +31,12 @@ thirdparty() {
 
   mkdir -p /opt/3rd_party
   cd /opt/3rd_party
-  wget https://diablo.elis.ugent.be/sites/diablo/files/prebuilt/curl-7.45.0-prebuilt.tar.bz2
-  wget https://diablo.elis.ugent.be/sites/diablo/files/prebuilt/libwebsockets-1.5-prebuilt.tar.bz2
-  wget https://diablo.elis.ugent.be/sites/diablo/files/prebuilt/openssl-1.0.2d-prebuilt.tar.bz2
-  tar xvf curl-7.45.0-prebuilt.tar.bz2
-  tar xvf libwebsockets-1.5-prebuilt.tar.bz2
-  tar xvf openssl-1.0.2d-prebuilt.tar.bz2
+  wget -P /tmp/ https://diablo.elis.ugent.be/sites/diablo/files/prebuilt/curl-7.45.0-prebuilt.tar.bz2
+  wget -P /tmp/ https://diablo.elis.ugent.be/sites/diablo/files/prebuilt/libwebsockets-1.5-prebuilt.tar.bz2
+  wget -P /tmp/ https://diablo.elis.ugent.be/sites/diablo/files/prebuilt/openssl-1.0.2d-prebuilt.tar.bz2
+  tar xvf /tmp/curl-7.45.0-prebuilt.tar.bz2
+  tar xvf /tmp/libwebsockets-1.5-prebuilt.tar.bz2
+  tar xvf /tmp/openssl-1.0.2d-prebuilt.tar.bz2
 }
 
 toolchains
