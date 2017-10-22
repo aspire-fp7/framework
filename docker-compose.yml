@@ -2,6 +2,8 @@ version: '3'
 services:
   aspire:
     build: .
+    links:
+      - mysql
     ports:
       - "8080-8099:8080-8099"
       - "18001:18001"
@@ -13,6 +15,17 @@ services:
       - "online_backends:/opt/online_backends"
       - "root_home:/root"
     working_dir: "/projects"
+  mysql:
+    environment:
+      - MYSQL_ROOT_PASSWORD=aspire
+    image: mysql:5.5
+    ports:
+      - "3306:3306"
+    # Set up databases.
+    volumes:
+      - "./modules/remote-attestation/setup/:/docker-entrypoint-initdb.d/remote-attestation"
+      - "./modules/renewability/setup/:/docker-entrypoint-initdb.d/renewability"
+      - "./docker/online/mysql-setup.sh:/docker-entrypoint-initdb.d/setup.sh"
 volumes:
   build:
   online_backends:

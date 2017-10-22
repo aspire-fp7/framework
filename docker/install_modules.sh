@@ -47,18 +47,12 @@ codemobility() {
 
 renewability() {
   echo "Building renewability..."
-
-  /etc/init.d/mysql restart || true
   /opt/framework/renewability/build.sh /opt/renewability
-  /opt/renewability/setup/database_setup.sh
 }
 
 RA() {
   echo "Building remote attestation..."
-
-  /etc/init.d/mysql restart || true
   /opt/framework/remote-attestation/build.sh /opt/RA
-  /opt/RA/setup/database_setup.sh
 }
 
 setup_symlinks

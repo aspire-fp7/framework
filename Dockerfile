@@ -31,22 +31,16 @@ RUN \
   # ACTC \
   apt-get install -y python python-pip && \
   pip install doit==0.29.0 && \
+  # MySQL \
+  apt-get install -y mysql-client && \
   # ONLINE TECHNIQUES \
   apt-get install -y nginx python-dev libmysqlclient-dev libwebsockets-dev openjdk-8-jre-headless binutils-dev tree && \
   pip install uwsgi && \
-# Warning: MySQL gets installed later on, because first the default pw is set
   # Development \
   apt-get install -y bison cmake flex gdb
 
-COPY docker/online/mysql-pre-setup.sh /tmp/mysql-pre-setup.sh
-
-# This has to run before the mysql-server installs as it sets the default password
-RUN \
- /tmp/mysql-pre-setup.sh && \
-  apt-get update && \
-  apt-get install -y mysql-client mysql-server 
-
 COPY docker/online/aspire_ascl.conf /etc/nginx/conf.d/
+COPY docker/online/aspire_mysql.cnf /etc/mysql/conf.d/
 
 # Install the prebuilts
 COPY docker/diablo/ /tmp/

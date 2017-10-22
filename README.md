@@ -80,14 +80,6 @@ This produces a final binary in `actc/build/bzip2_linux/BC05/bzip2`.
 If you have an ARM development board, you can copy this file and run it as
 you would do any other binary.
 
-**Warning:** It is possible that when you stop your container and restart it,
-the MySQL server that is required by some of the steps in the ACTC has stopped.
-In that case, you will see MySQL-related errors either when running the ACTC
-or when running a protected application (in which case the errors will appear in the log files).
-You can restart the server by running 
-
-    # /etc/init.d/mysql restart
-
 ## Running the ACTC with only offline protections
 The ACTC now has applied no protections at all to our binary. As a first step, we will 
 apply some offline protection techniques. The annotations to instruct the protection
