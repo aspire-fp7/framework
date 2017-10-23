@@ -58,6 +58,7 @@ RA() {
 
   /etc/init.d/mysql restart || true
   /opt/framework/remote-attestation/build.sh /opt/RA
+  /opt/RA/setup/database_setup.sh
 }
 
 setup_symlinks
