@@ -33,10 +33,6 @@ communications() {
 
   echo "  Building ASCL..."
   /opt/framework/ascl/build.sh /opt/ASCL
-
-  echo "Setup of server..."
-  /tmp/nginx-setup.sh
-  pip install uwsgi
 }
 
 anti_debugging() {

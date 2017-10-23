@@ -30,7 +30,8 @@ RUN \
   apt-get install -y python python-pip && \
   pip install doit==0.29.0 && \
   # ONLINE TECHNIQUES \
-  apt-get install -y nginx php5-fpm python-dev libmysqlclient18 libmysqlclient-dev openjdk-7-jre binutils-dev tree && \
+  apt-get install -y nginx python-dev libmysqlclient18 libmysqlclient-dev openjdk-7-jre binutils-dev tree && \
+  pip install uwsgi && \
 # Warning: MySQL gets installed later on, because first the default pw is set
   # Development \
   apt-get install -y bison cmake flex gdb
@@ -43,11 +44,7 @@ RUN \
   apt-get update && \
   apt-get install -y mysql-client mysql-server 
 
-COPY docker/online/nginx-default /etc/nginx/sites-available/default
-COPY docker/online/aspire_ascl.conf /etc/nginx/conf.d/aspire_ascl.conf
-
-# TODO: this file is slightly patched for Docker (and also patches /opt/ASCL/aspire-portal/aspire-portal.ini): make them uniform!
-COPY docker/online/nginx-setup.sh /tmp/nginx-setup.sh
+COPY docker/online/aspire_ascl.conf /etc/nginx/conf.d/
 
 # Install the prebuilts
 COPY docker/diablo/ /tmp/
