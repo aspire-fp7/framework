@@ -1,5 +1,6 @@
 # Build Diablo
 FROM ubuntu:14.04 as diablo-builder
+ARG DEBIAN_FRONTEND=noninteractive
 
 # Install the required packages
 RUN \
@@ -15,6 +16,7 @@ RUN \
 
 # Actual docker image
 FROM ubuntu:14.04
+ARG DEBIAN_FRONTEND=noninteractive
 
 COPY --from=diablo-builder /opt/diablo /opt/diablo
 
