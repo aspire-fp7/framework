@@ -1,5 +1,5 @@
 # Build Diablo
-FROM ubuntu:14.04 as diablo-builder
+FROM ubuntu:16.04 as diablo-builder
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install the required packages
@@ -15,7 +15,7 @@ RUN \
   make -j$(nproc) install
 
 # Actual docker image
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 COPY --from=diablo-builder /opt/diablo /opt/diablo
@@ -32,7 +32,7 @@ RUN \
   apt-get install -y python python-pip && \
   pip install doit==0.29.0 && \
   # ONLINE TECHNIQUES \
-  apt-get install -y nginx python-dev libmysqlclient18 libmysqlclient-dev openjdk-7-jre binutils-dev tree && \
+  apt-get install -y nginx python-dev libmysqlclient-dev libwebsockets-dev openjdk-8-jre-headless binutils-dev tree && \
   pip install uwsgi && \
 # Warning: MySQL gets installed later on, because first the default pw is set
   # Development \
