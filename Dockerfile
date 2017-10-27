@@ -40,7 +40,6 @@ RUN \
   apt-get install -y bison cmake flex gdb
 
 COPY docker/online/aspire_ascl.conf /etc/nginx/conf.d/
-COPY docker/online/aspire_mysql.cnf /etc/mysql/conf.d/
 
 # Install the prebuilts
 COPY docker/diablo/ /tmp/
