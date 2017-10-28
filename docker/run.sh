@@ -44,4 +44,4 @@ then
  fi
 fi
 
-docker-compose run --service-ports ${ADDITIONALVOLUMES} aspire ${COMMAND}
+docker-compose run --service-ports ${ADDITIONALVOLUMES} actc ${COMMAND}

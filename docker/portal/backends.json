@@ -1,0 +1,9 @@
+{
+	"20": {
+		"exchange": "/opt/code_mobility/mobility_server"
+	},
+	"90":{
+		"exchange": "",
+		"send": "/opt/remote_attestation/ra_forwarder"
+	}
+}

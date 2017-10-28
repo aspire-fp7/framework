@@ -29,20 +29,13 @@ RUN \
   apt-get install -y byobu curl git htop man unzip vim wget && \
   apt-get install -y binutils-multiarch gcc-multilib zlib1g:i386 && \
   # ACTC \
-  apt-get install -y python python-pip && \
+  apt-get install -y binutils-dev libmysqlclient-dev libwebsockets-dev mysql-client openjdk-8-jre-headless python python-pip && \
   pip install doit==0.29.0 && \
-  # MySQL \
-  apt-get install -y mysql-client && \
-  # ONLINE TECHNIQUES \
-  apt-get install -y nginx python-dev libmysqlclient-dev libwebsockets-dev openjdk-8-jre-headless binutils-dev tree && \
-  pip install uwsgi && \
   # Development \
   apt-get install -y bison cmake flex gdb
 
-COPY docker/online/aspire_ascl.conf /etc/nginx/conf.d/
-
 # Install the prebuilts
-COPY docker/diablo/ /tmp/
+COPY docker/actc/ /tmp/
 COPY docker/install_prebuilts.sh /tmp/
 RUN /tmp/install_prebuilts.sh
 

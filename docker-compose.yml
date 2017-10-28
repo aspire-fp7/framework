@@ -1,11 +1,14 @@
 version: '3'
 services:
-  aspire:
-    build: .
+  actc:
+    build:
+      context: .
+      dockerfile: ./docker/actc/Dockerfile
     links:
       - mysql
+      - portal
     ports:
-      - "8080-8099:8080-8099"
+      - "8090-8099:8090-8099"
       - "18001:18001"
     security_opt:
       - seccomp=unconfined # Allow gdb debugging
@@ -25,7 +28,17 @@ services:
     volumes:
       - "./modules/remote-attestation/setup/:/docker-entrypoint-initdb.d/remote-attestation"
       - "./modules/renewability/setup/:/docker-entrypoint-initdb.d/renewability"
-      - "./docker/online/mysql-setup.sh:/docker-entrypoint-initdb.d/setup.sh"
+      - "./docker/mysql/mysql-setup.sh:/docker-entrypoint-initdb.d/setup.sh"
+  portal:
+    build:
+      context: .
+      dockerfile: ./docker/portal/Dockerfile
+    links:
+      - mysql
+    ports:
+      - "8088:80"
+    volumes:
+      - "online_backends:/opt/online_backends"
 volumes:
   build:
   online_backends:
