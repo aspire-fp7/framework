@@ -22,7 +22,7 @@ setup_symlinks() {
   echo "Setting up symlinks..."
   ln -s /opt/framework/actc/src/ /opt/ACTC
   ln -s /opt/framework/annotation_extractor /opt/annotation_extractor
-  ln -s /opt/framework/code-guards /opt/codeguard
+  ln -s /opt/framework/code_guards /opt/codeguard
 }
 
 communications() {
@@ -40,9 +40,9 @@ anti_debugging() {
   /opt/framework/anti_debugging/build.sh /opt/anti_debugging
 }
 
-codemobility() {
+code_mobility() {
   echo "Building code mobility..."
-  /opt/framework/code-mobility/build.sh /opt/code_mobility
+  /opt/framework/code_mobility/build.sh /opt/code_mobility
 }
 
 renewability() {
@@ -50,9 +50,9 @@ renewability() {
   /opt/framework/renewability/build.sh /opt/renewability
 }
 
-RA() {
+remote_attestation() {
   echo "Building remote attestation..."
-  /opt/framework/remote-attestation/build.sh /opt/RA
+  /opt/framework/remote_attestation/build.sh /opt/RA
 }
 
 setup_symlinks
@@ -60,6 +60,6 @@ setup_symlinks
 [ -d /opt/framework/anti_debugging ] && anti_debugging
 diablo_selfprofiling
 communications
-codemobility
+code_mobility
 renewability
-RA
+remote_attestation
