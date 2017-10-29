@@ -51,7 +51,3 @@ RUN mkdir -p /opt/framework_buildtime && ln -s /opt/framework_buildtime /opt/fra
 COPY modules/ /opt/framework/
 COPY docker/install_modules.sh /tmp/
 RUN /tmp/install_modules.sh
-
-# EXPOSE 8088
-EXPOSE 8080-8099
-EXPOSE 18001
