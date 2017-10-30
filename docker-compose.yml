@@ -26,7 +26,7 @@ services:
       - "3306:3306"
     # Set up databases.
     volumes:
-      - "./modules/remote-attestation/setup/:/docker-entrypoint-initdb.d/remote-attestation"
+      - "./modules/remote_attestation/setup/:/docker-entrypoint-initdb.d/remote_attestation"
       - "./modules/renewability/setup/:/docker-entrypoint-initdb.d/renewability"
       - "./docker/mysql/mysql-setup.sh:/docker-entrypoint-initdb.d/setup.sh"
   portal:
