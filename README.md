@@ -9,7 +9,7 @@ with the ASPIRE tools in it. It will also explain how to apply different ASPIRE 
 with the ASPIRE Compiler Tool Chain (ACTC).
 
 
-## Setting up the Docker container
+## Setting up the Docker
 We assume that you have already Docker installed on your machine. If not,
 you can follow the instructions from the [Docker website](https://www.docker.com/).
 
@@ -22,18 +22,15 @@ will also query you to (optionally) install additional support for anti_debuggin
     # cd framework
     # ./setup.sh
 
-This repository contains the Dockerfile and docker-compose.yml files. To build the ASPIRE docker service, at least version 1.13 of
-docker-compose is required. When the right version of docker-compose is installed, you just run the following command in this directory:
+This repository contains the docker-compose.yml organizing the different containers. To build the ASPIRE docker, at least version 1.13 of
+docker-compose is required. All components will automatically be built the first time you run them.
 
-    # docker-compose build aspire
-
-When building the Docker container, most ASPIRE projects are built from scratch
-inside the container.
-This allows you to immediately start developing and extending any existing
-tools, without having to worry about how to build the projects and how to
-overwrite the pre-built files. The only down side is that setting up the initial
-container will take some time. The build process takes about 4 minutes on
-a decently modern machine.
+When building, most ASPIRE projects are built from scratch inside the
+container. This allows you to immediately start developing and extending any
+existing tools, without having to worry about how to build the projects and how
+to overwrite the pre-built files. The only down side is that setting up the
+initial container will take some time. The build process takes about 4 minutes
+on a decently modern machine.
 
 The only files that are not built inside the container are:
 

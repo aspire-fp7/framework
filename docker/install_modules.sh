@@ -25,14 +25,9 @@ setup_symlinks() {
   ln -s /opt/framework/code_guards /opt/codeguard
 }
 
-communications() {
-  echo "Building Communications libraries..."
-
+accl() {
   echo "  Building ACCL..."
   /opt/framework/accl/build.sh /opt/ACCL
-
-  echo "  Building ASCL..."
-  /opt/framework/ascl/build.sh /opt/ASCL
 }
 
 anti_debugging() {
@@ -59,7 +54,7 @@ setup_symlinks
 
 [ -d /opt/framework/anti_debugging ] && anti_debugging
 diablo_selfprofiling
-communications
+accl
 code_mobility
 renewability
 remote_attestation

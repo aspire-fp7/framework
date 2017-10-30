@@ -7,9 +7,8 @@ services:
     links:
       - mysql
       - portal
-    ports:
-      - "8090-8099:8090-8099"
-      - "18001:18001"
+      - ra_manager
+      - renewability_manager
     security_opt:
       - seccomp=unconfined # Allow gdb debugging
     volumes:
@@ -37,6 +36,26 @@ services:
       - mysql
     ports:
       - "8088:80"
+    volumes:
+      - "online_backends:/opt/online_backends"
+  ra_manager:
+    build:
+      context: .
+      dockerfile: ./modules/remote_attestation/Dockerfile
+    links:
+      - mysql
+    ports:
+      - "8090-8099:8090-8099"
+    volumes:
+      - "online_backends:/opt/online_backends"
+  renewability_manager:
+    build:
+      context: .
+      dockerfile: ./modules/renewability/Dockerfile
+    links:
+      - mysql
+    ports:
+      - "18001:18001"
     volumes:
       - "online_backends:/opt/online_backends"
 volumes:
