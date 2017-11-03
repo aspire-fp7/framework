@@ -18,8 +18,6 @@ RUN \
 FROM ubuntu:16.04
 ARG DEBIAN_FRONTEND=noninteractive
 
-COPY --from=diablo-builder /opt/diablo /opt/diablo
-
 RUN \
   # The i386, and installs of binutils-multiarch gcc-multilib zlib1g:i386 are workarounds for the 32 bit Android toolchain
   dpkg --add-architecture i386 && \
@@ -38,6 +36,9 @@ RUN \
 COPY docker/actc/ /tmp/
 COPY docker/install_prebuilts.sh /tmp/
 RUN /tmp/install_prebuilts.sh
+
+# Install Diablo
+COPY --from=diablo-builder /opt/diablo /opt/diablo
 
 # Copy the modules and install them
 RUN mkdir -p /opt/framework_buildtime && ln -s /opt/framework_buildtime /opt/framework
