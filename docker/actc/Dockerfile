@@ -23,8 +23,7 @@ RUN \
   dpkg --add-architecture i386 && \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get update && \
-  apt-get install -y software-properties-common && \
-  apt-get install -y byobu curl git htop man unzip vim wget && \
+  apt-get install -y htop man ssh vim wget && \
   apt-get install -y binutils-multiarch gcc-multilib zlib1g:i386 && \
   # ACTC \
   apt-get install -y binutils-dev libmysqlclient-dev libwebsockets-dev mysql-client openjdk-8-jre-headless python python-pip && \
