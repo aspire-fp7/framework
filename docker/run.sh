@@ -44,4 +44,4 @@ then
  fi
 fi
 
-docker-compose run --service-ports ${ADDITIONALVOLUMES} actc ${COMMAND}
+docker-compose run ${ADDITIONALVOLUMES} actc ${COMMAND}
