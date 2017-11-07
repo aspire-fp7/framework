@@ -33,7 +33,6 @@ RUN \
 
 # Install the prebuilts
 COPY docker/actc/ /tmp/
-COPY docker/install_prebuilts.sh /tmp/
 RUN /tmp/install_prebuilts.sh
 
 # Install Diablo
@@ -42,5 +41,4 @@ COPY --from=diablo-builder /opt/diablo /opt/diablo
 # Copy the modules and install them
 RUN mkdir -p /opt/framework_buildtime && ln -s /opt/framework_buildtime /opt/framework
 COPY modules/ /opt/framework/
-COPY docker/install_modules.sh /tmp/
 RUN /tmp/install_modules.sh
