@@ -19,3 +19,6 @@ RUN /tmp/remote_attestation/build_portal.sh /opt/remote_attestation
 
 # Install the app
 COPY docker/portal/ /app
+
+# Clean up
+RUN rm -rf /tmp/*

@@ -42,3 +42,6 @@ COPY --from=diablo-builder /opt/diablo /opt/diablo
 RUN mkdir -p /opt/framework_buildtime && ln -s /opt/framework_buildtime /opt/framework
 COPY modules/ /opt/framework/
 RUN /tmp/install_modules.sh
+
+# Clean up
+RUN rm -rf /tmp/*
