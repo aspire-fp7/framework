@@ -6,15 +6,7 @@ set -o nounset
 
 diablo_selfprofiling() {
   echo "Building Diablo-Selfprofiling..."
-
-  mkdir -p /opt/diablo/obj/
-  cd /opt/framework/diablo/self-profiling
-  ./generate.sh /opt/diablo-gcc-toolchain/bin/arm-diablo-linux-gnueabi-cc printarm_linux.o arm
-  make
-  cp printarm_linux.o /opt/diablo/obj/
-  ./generate.sh /opt/diablo-android-gcc-toolchain/bin/arm-linux-androideabi-gcc printarm_android.o arm
-  make
-  cp printarm_android.o /opt/diablo/obj/
+  /opt/framework/diablo/build_obj.sh /opt/diablo/obj
 }
 
 # Set up the symlinks for the modules that don't require anything special.
