@@ -39,7 +39,7 @@ renewability() {
 
 remote_attestation() {
   echo "Building remote attestation..."
-  /opt/framework/remote_attestation/build.sh /opt/RA
+  /opt/framework/remote_attestation/build.sh /opt/remote_attestation
 }
 
 setup_symlinks
