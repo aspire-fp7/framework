@@ -1,46 +1,50 @@
-# How to use the ASPIRE framework in a Docker container
+# How to use the ASPIRE framework
 In this manual, we will explain how to set up the ASPIRE tools and how to use
 them to protect a simple application.
 
 The set up of the open sourced version ASPIRE tools is simple thanks to the use
-of the [Docker virtualization framework](https://www.docker.com/).
-The rest of this manual describes how to set up a Docker container
-with the ASPIRE tools in it. It will also explain how to apply different ASPIRE protections
-with the ASPIRE Compiler Tool Chain (ACTC).
+of the [Docker virtualization framework](https://www.docker.com/). More
+specifically, we use [Docker
+Compose](https://docs.docker.com/compose/overview/) for running and combining
+all the different components. The rest of this manual describes how to set
+everything up, and how to apply different ASPIRE protections with the ASPIRE
+Compiler Tool Chain (ACTC).
 
+## Docker & Setup
+We assume that you have already Docker installed on your machine. If not, you
+can follow the instructions from the [Docker website](https://www.docker.com/).
+At least version 1.13 of Docker Compose is required.
 
-## Setting up the Docker
-We assume that you have already Docker installed on your machine. If not,
-you can follow the instructions from the [Docker website](https://www.docker.com/).
-
-To set up an ASPIRE Docker container, you just have to clone this repository which contains the base Docker file. As
-all the actual tools (and Docker support files) are linked into this repository with git submodules, you'll also
-have to initialize the git submodules in addition to cloning this repository. We use a separate script for this, which
-will also query you to (optionally) install additional support for anti_debugging.
+To set up the ASPIRE framework, you just have to clone this repository which
+contains the base Docker file. As all the actual tools are linked into this
+repository with git submodules, you'll also have to initialize the git
+submodules in addition to cloning this repository. We use a separate script for
+this, which will also query you to (optionally) install additional support for
+anti_debugging.
 
     # git clone https://github.com/aspire-fp7/framework/
     # cd framework
     # ./setup.sh
 
-This repository contains the docker-compose.yml organizing the different containers. To build the ASPIRE docker, at least version 1.13 of
-docker-compose is required. All components will automatically be built the first time you run them.
-
-When building, most ASPIRE projects are built from scratch inside the
-container. This allows you to immediately start developing and extending any
+No extra setup is required: all components will automatically be built the at
+the first run. Most ASPIRE projects are built from scratch from the source
+code. This allows you to immediately start developing and extending any
 existing tools, without having to worry about how to build the projects and how
-to overwrite the pre-built files. The only down side is that setting up the
-initial container will take some time. The build process takes about 4 minutes
-on a decently modern machine.
+to overwrite the pre-built files. The only down side is that the initial build
+takes some time. This process takes about a minute on a decently modern
+machine.
 
-The only files that are not built inside the container are:
+The only files that are not built inside containers are:
 
 * The patched binary tool chains. These can be rebuilt from source by cloning
-Diablo's toolchains repository located at [https://github.com/diablo-rewriter/toolchains](https://github.com/diablo-rewriter/toolchains)
+Diablo's toolchains repository located at
+[https://github.com/diablo-rewriter/toolchains](https://github.com/diablo-rewriter/toolchains)
 and following the instructions in the `README.MD` file.
-* Versions of the OpenSSL, libwebsockets and libcurl libraries that have
-been built with Diablo-compatible tool chains. These can be rebuilt
-from source by cloning the [https://github.com/aspire-fp7/3rd_party/](https://github.com/aspire-fp7/3rd_party/) repository
-and following the instructions in the `README.MD` file.
+* Versions of the OpenSSL, libwebsockets and libcurl libraries that have been
+built with Diablo-compatible tool chains. These can be rebuilt from source by
+cloning the
+[https://github.com/aspire-fp7/3rd_party/](https://github.com/aspire-fp7/3rd_party/)
+repository and following the instructions in the `README.MD` file.
 
 ## Starting the Docker
 We have provided a script to start the Docker container with the correct parameters:
