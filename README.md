@@ -31,7 +31,7 @@ the first run. Most ASPIRE projects are built from scratch from the source
 code. This allows you to immediately start developing and extending any
 existing tools, without having to worry about how to build the projects and how
 to overwrite the pre-built files. The only down side is that the initial build
-takes some time. This process takes about a minute on a decently modern
+takes some time. This process takes about 6 minutes on a decently modern
 machine.
 
 The only files that are not built inside containers are:
@@ -46,112 +46,100 @@ cloning the
 [https://github.com/aspire-fp7/3rd_party/](https://github.com/aspire-fp7/3rd_party/)
 repository and following the instructions in the `README.MD` file.
 
-## Starting the Docker
-We have provided a script to start the Docker container with the correct parameters:
-
-    # ./docker/run.sh
-    root@33f36aef63c2:/projects# 
-
-First, this script prepares a 'projects' directory which already has the actc-demos repository
-checked out into it. It is one of the samples in that demos repository that we will
-be using in the remainder of this manual.
-
-Next, the script opens a bash shell in the *aspire* container in which we will
-be executing all further commands. Furthermore, this script sets up the correct
-ports on your Docker container for
-the online protection techniques. Finally, it maps the `projects/`
-directory into the container as `/projects/`.
-
 ## Running the ACTC without any protections
-The `build.sh` sets up a repository with a demo project in 
-`/projects/actc-demos/` We will be protecting the bzip2
-compression utility in this demos repository. As an example, we have already
+During the first run of the ACTC the 'projects' directory is prepared by
+checking out the actc-demos repository into it. We will use one of the samples
+in this repository for the remainder of this manual. The `projects/` directory
+is mapped into the ACTC container as `/projects/`, so this demos repository is
+located inside the container at `/projects/actc-demos/`. We will be protecting
+the bzip2 compression utility in the repository. As an example, we have already
 added some annotations to the `bzip2.c` source file.
 
-First, we will use the ACTC to build an unprotected bzip2 binary for the 
-ARM Linux platform. We have provided an ACTC configuration file for this purpose. You can view this file at `actc/bzip2_linux.json`.
-This configuration file instructs the ACTC in such a way that the
-ACTC will build the binary, but it will not apply any protections. To
-run the ACTC with this configuration file, do the following:
+First, we will use the ACTC to build an unprotected bzip2 binary for the ARM
+Linux platform. We have provided an ACTC configuration file for this purpose.
+You can view this file at
+`projects/actc-demos/bzip2-1.0.6/actc/bzip2_linux.json`. This configuration
+file instructs the ACTC in such a way that the ACTC will build the binary, but
+it will not apply any protections. To run the ACTC with this configuration
+file, do the following:
 
-    # cd actc-demos/bzip2-1.0.6/
-    # /opt/ACTC/actc.py -d -f actc/bzip2_linux.json
+    # ./docker/run.sh -d -f /projects/actc-demos/bzip2-1.0.6/actc/bzip2_linux.json
 
-This produces a final binary in `actc/build/bzip2_linux/BC05/bzip2`.
-If you have an ARM development board, you can copy this file and run it as
-you would do any other binary.
+This produces a final binary in
+`projects/actc-demos/bzip2-1.0.6/actc/build/bzip2_linux/BC05/bzip2`. If you
+have an ARM development board, you can copy this file and run it as you would
+do any other binary.
 
 ## Running the ACTC with only offline protections
-The ACTC now has applied no protections at all to our binary. As a first step, we will 
-apply some offline protection techniques. The annotations to instruct the protection
-tools which code fragments need to be protected have already been added in the source
-code (you can find these by looking for `_Pragma("ASPIRE begin` and
-`_Pragma ("ASPIRE end")` in the source files). 
-As you can see, we have added annotations for *call stack checks*, *binary obfuscations*,
-and *code guards*.
-We only need to
-enable their application in the configuration file of the ACTC.
+The ACTC now has applied no protections at all to our binary. As a first step,
+we will apply some offline protection techniques. The annotations to instruct
+the protection tools which code fragments need to be protected have already
+been added in the source code (you can find these by looking for
+`_Pragma("ASPIRE begin` and `_Pragma ("ASPIRE end")` in the source files). As
+you can see, we have added annotations for *call stack checks*, *binary
+obfuscations*, and *code guards*. We only need to enable their application in
+the configuration file of the ACTC.
 
 Annotations can be added and modified at will. Their syntax and semantics are
-described in detail in the appendices of the
-[ASPIRE Framework report](https://aspire-fp7.eu/sites/default/files/D5.11-ASPIRE-Framework-Report.pdf).
+described in detail in the appendices of the [ASPIRE Framework
+report](https://aspire-fp7.eu/sites/default/files/D5.11-ASPIRE-Framework-Report.pdf).
 
-The configuration file is a JSON file that can be edited easily. The Docker container
-has vim installed, but of course you can use any editor of your liking.
+The configuration file is a JSON file that can be edited easily:
 
-    # vim actc/bzip2_linux.json
+    # vim projects/actc-demos/bzip2-1.0.6/actc/bzip2_linux.json
 
 Code guards is a technique that consists of a source-to-source transformation
-and a binary transformation. First, we enable the source-to-source part.
-We search for `"SLP08"`, which is the name of the source step responsible for
-this. We see that the `"traverse"` is currently set to `true`,
-which means that the action for this step simply copies the files from
-the input directory to the output directory, rather than applying the action
-in this step. Thus, set this action to `false`.
+and a binary transformation. First, we enable the source-to-source part. We
+search for `"SLP08"`, which is the name of the source step responsible for
+this. We see that the `"traverse"` is currently set to `true`, which means that
+the action for this step simply copies the files from the input directory to
+the output directory, rather than applying the action in this step. Thus, set
+this action to `false`.
 
 Next, we have to edit the configuration where the binary protection techniques
-are described. Search for `"BLP04"`, which is the name of the final
-binary protection step in the ACTC. In the configuration for this step,
-we will now enable all the aforementioned protections: set `"obfuscations"` and
-`"call_stack_check"` to `true` (the binary
-part of the code guards protection is automatically enabled or disabled depending
-on how we configured the `"SLP08"` step). We can now
-run the ACTC as before:
+are described. Search for `"BLP04"`, which is the name of the final binary
+protection step in the ACTC. In the configuration for this step, we will now
+enable all the aforementioned protections: set `"obfuscations"` and
+`"call_stack_check"` to `true` (the binary part of the code guards protection
+is automatically enabled or disabled depending on how we configured the
+`"SLP08"` step). We can now run the ACTC as before:
 
-    # /opt/ACTC/actc.py -d -f actc/bzip2_linux.json
+    # ./docker/run.sh -d -f /projects/actc-demos/bzip2-1.0.6/actc/bzip2_linux.json
 
-This again produces the protected binary in `actc/build/bzip2_linux/BC05/bzip2`.
-This time, you can check the log files in the `actc/build/bzip2_linux/BC05/` directory
-to verify that the protections have indeed been applied. For example, the file
+This again produces the protected binary in
+`projects/actc-demos/bzip2-1.0.6/actc/build/bzip2_linux/BC05/bzip2`. This
+time, you can check the log files in the
+`projects/actc-demos/bzip2-1.0.6/actc/build/bzip2_linux/BC05/` directory to
+verify that the protections have indeed been applied. For example, the file
 `bzip2.diablo.obfuscation.log` contains information of which binary
 obfuscations have been applied to which code fragments.
 
 ## Running the ACTC with code mobility
 Now that we have created a version of our binary with offline protections
 applied, it is time to apply our first online protection called code mobility.
-This will split off binary code fragments from the application, and replace them
-with stubs that at run time ask for these code fragments to be downloaded
+This will split off binary code fragments from the application, and replace
+them with stubs that at run time ask for these code fragments to be downloaded
 from a protection server. Only once they are downloaded at run time, are these
 code fragments executed.
 
 The first step is to enable this protection in the JSON configuration. There
 are two steps needed to enable this: enabling the technique itself, and
 configuring the server. To enable the technique, simply change the value of
-`"code_mobility"` to `true` in the `"BLP04"`
-section of the configuration file.
+`"code_mobility"` to `true` in the `"BLP04"` section of the configuration file.
 
-To configure the server in the JSON configuration file, go to the `"COMPILE_ACCL"`
-section of the configuration, and modify the value of `"endpoint"` to
-be the IP of the machine on which your Docker container is running.
+To configure the server in the JSON configuration file, go to the
+`"COMPILE_ACCL"` section of the configuration, and modify the value of
+`"endpoint"` to be the IP of the machine on which your Docker container is
+running.
 
 Again, run the ACTC as before:
 
-    # /opt/ACTC/actc.py -d -f actc/bzip2_linux.json
+    # ./docker/run.sh -d -f /projects/actc-demos/bzip2-1.0.6/actc/bzip2_linux.json
 
 You can first verify that the code mobility protection was applied by
-inspecting the log file called `bzip2.diablo.code_mobility.log`. Next, 
-verify that mobile code blocks were indeed produced. If you look up at the output
-of the ACTC, near the end it will write information to the terminal similar to:
+inspecting the log file called `bzip2.diablo.code_mobility.log`. Next, verify
+that mobile code blocks were indeed produced. If you look up at the output of
+the ACTC, near the end it will write information to the terminal similar to:
 
     .  SERVER_P20
        code mobility       /projects/actc-demos/bzip2-1.0.6/actc/build/bzip2_linux/BC05/mobile_blocks
@@ -161,20 +149,24 @@ of the ACTC, near the end it will write information to the terminal similar to:
     APPLICATION ID  = D7846E47BB09D62A2824CA9CF5000AE8
     .  SERVER_RENEWABILITY_CREATE
 
-This indicates that the ACTC is deploying the mobile blocks to the location
-in which the code mobility server expects these blocks to be. This
-location depends on the `APPLICATION ID` (AID) mentioned in the output of the ACTC:
-they are located in `/opt/online_backends/<AID>/code_mobility/00000000/`:
+This indicates that the ACTC is deploying the mobile blocks to the location in
+which the code mobility server expects these blocks to be. This location
+depends on the `APPLICATION ID` (AID) mentioned in the output of the ACTC: they
+are located inside the container at
+`/opt/online_backends/<AID>/code_mobility/00000000/`:
 
-    # ls  /opt/online_backends/D7846E47BB09D62A2824CA9CF5000AE8/code_mobility/00000000/
+    # docker-compose exec actc bash
+    root@b343a3897ad4:/projects#
+    root@b343a3897ad4:/projects# ls  /opt/online_backends/D7846E47BB09D62A2824CA9CF5000AE8/code_mobility/00000000/
     mobile_dump_00000000  mobile_dump_00000001  mobile_dump_00000002  mobile_dump_00000003  mobile_dump_00000004  mobile_dump_00000005  mobile_dump_00000006  mobile_dump_00000007  mobile_dump_00000008  mobile_dump_00000009  mobile_dump_0000000a  source.txt
     
-As you can see in the source code, the code mobility annotation was applied to the
-`uncompress` function. So if you now copy the protected file to an ARM board and try to decompress a file,
-the code mobility protection will be triggered. You can afterwards verify
-the logs in the server to see which blocks were requested:
+As you can see in the source code, the code mobility annotation was applied to
+the `uncompress` function. So if you now copy the protected file to an ARM
+board and try to decompress a file, the code mobility protection will be
+triggered. You can afterwards verify the logs in the server to see which blocks
+were requested:
 
-    # scp actc/build/bzip2_linux/BC05/bzip2 user@armboard:.
+    # scp projects/actc-demos/bzip2-1.0.6/actc/build/bzip2_linux/BC05/bzip2 user@armboard:.
     # ssh user@armboard
     user@armboard:~$ dd if=/dev/zero of=./zeroes bs=1M count=10 ; bzip2 zeroes
     10+0 records in
@@ -193,30 +185,31 @@ the logs in the server to see which blocks were requested:
     
     Fri Nov 25 15:02:24 2016 [Code Mobility Server] BLOCK_ID 8 correctly sent to ASPIRE Portal.
 
-**Warning:** the server ports of the ASPIRE servers should not be firewalled
-on your Docker machine. Similarly, if your Docker is running inside a virtual machine,
-your virtual machine monitor should forward these ports to the VM itself. The ports are
-all ports between 8080 to 8099 (inclusive) and port 18001.
+**Warning:** the server ports of the ASPIRE servers should not be firewalled on
+your Docker machine. Similarly, if your Docker is running inside a virtual
+machine, your virtual machine monitor should forward these ports to the VM
+itself. The ports are: port 8088, all ports between 8090 to 8099 (inclusive),
+and port 18001.
 
 ## Running the ACTC with remote attestation
 Now that we have protected the application with code mobility, we will enable
 another online protection technique called remote attestation. This technique
-uses a server to verify the integrity of code fragments during the application execution.
-The application connects to the server, which then instructs the application to send
-attestations of certain code regions back to the server. The results of these
-attestations can be linked to the code mobility protection technique to
-stop serving code to applications that have been compromised.
+uses a server to verify the integrity of code fragments during the application
+execution. The application connects to the server, which then instructs the
+application to send attestations of certain code regions back to the server.
+The results of these attestations can be linked to the code mobility protection
+technique to stop serving code to applications that have been compromised.
 
 First, we enable the remote attestation step in the ACTC configuration file.
 The name of the step source-to-source part of the remote attestation protection
-is named SLP07. So, to enable remote attestation, simply change the `"excluded"`
-value in the `"SLP07"` section of the configuration file to `false`.
-The binary part of this protection technique is again automatically enabled and disabled
-based on the value in `"SLP07"`.
+is named SLP07. So, to enable remote attestation, simply change the
+`"excluded"` value in the `"SLP07"` section of the configuration file to
+`false`. The binary part of this protection technique is again automatically
+enabled and disabled based on the value in `"SLP07"`.
 
 Again, to build the protected application with the ACTC, just run as before:
 
-    # /opt/ACTC/actc.py -d -f actc/bzip2_linux.json
+    # ./docker/run.sh -d -f /projects/actc-demos/bzip2-1.0.6/actc/bzip2_linux.json
 
 The output of the ACTC immediately shows that the remote attestation was deployed:
 
@@ -228,19 +221,19 @@ The output of the ACTC immediately shows that the remote attestation was deploye
     
     **** RA application components deployed on server successfully ****
 
-To verify that the binary itself indeed connects to the protection server
-of the remote attestation technique, and that this server indeed receives
-valid attestations, we can again copy the protected binary to a development board,
-run it to compress and decompress the file we created earlier
-to demonstrate code mobility, and check the attestation logs on the server:
+To verify that the binary itself indeed connects to the protection server of
+the remote attestation technique, and that this server indeed receives valid
+attestations, we can again copy the protected binary to a development board,
+run it to compress and decompress the file we created earlier to demonstrate
+code mobility, and check the attestation logs on the server:
 
-    # scp actc/build/bzip2_linux/BC05/bzip2 user@armboard:.
+    # scp projects/actc-demos/bzip2-1.0.6/actc/build/bzip2_linux/BC05/bzip2 user@armboard:.
     # ssh user@armboard
     user@armboard:~$ ./bzip2 zeroes ; ./bzip2 -d zeroes.bz2
     [1927760:9055] NOTICE: Initial logging level 7
     <... some additional logging information about the connection is displayed ...>
     user@armboard:~$ logout
-    # tail /opt/online_backends/remote_attestation/verifier.log  
+    # tail /opt/online_backends/remote_attestation/verifier.log
     03E2A03010E28DBB00E3922A020A02D3
     75E190009DE39330F8E3FE305CE19F00
     00E5933078EB014D9AE1FE2C45E39CCA
@@ -253,24 +246,27 @@ to demonstrate code mobility, and check the attestation logs on the server:
     (Verifier) Execution finished at: Fri Nov 25 15:55:07 2016
 
 This shows that the protected application indeed connected to the server, and
-that the server sent an annotation request back to this client, and that
-this client successfully responded to that request.
+that the server sent an annotation request back to this client, and that this
+client successfully responded to that request.
 
 ## Doing development with this Docker container
 
-When you're playing with the Docker container and want to edit the sources of one of
-the tools, it can be handy to have changes made in your host immediately propagate
-to the Docker, and vice versa. To make this easier, we have provided the option of
-running the container in development mode. This can be enabled by setting the
-`DEVELOPER_MODE` variable before running the docker, like so:
+When you're playing with the Docker container and want to edit the sources of
+one of the tools, it can be handy to have changes made in your host immediately
+propagate to the Docker, and vice versa. To make this easier, we have provided
+the option of running the container in development mode. This can be started by
+running the development script, and then running the ACTC inside the container:
 
-    # export DEVELOPER_MODE=yes
+    # ./docker/development.sh
+    root@b343a3897ad4:/projects#
+    root@b343a3897ad4:/projects# /opt/ACTC/actc.py -d -f /projects/actc-demos/bzip2-1.0.6/actc/bzip2_linux.json
 
-When starting the container with the `run.sh` script this sets up Docker volumes in
+The development script works by setting up Docker volumes volumes in
 `/opt/development` that refer to the directories of all the tools on your host.
-`/opt/framework` is then updated to be a symlink to `/opt/development`, and Diablo is
-built from (development) source. This build happens on a named volume (located at /build
-in the Docker) so that it has to happen only once, and incremental builds are easy.
+`/opt/framework` is then updated to be a symlink to `/opt/development`, and
+Diablo is built from (development) source. This build happens on a named volume
+(located at /build in the Docker) so that it has to happen only once, and
+incremental builds are easy.
 
 ## Further reading
 

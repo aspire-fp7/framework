@@ -1,28 +1,24 @@
 #!/bin/bash
-set -e
-set -u
+set -o errexit
+set -o pipefail
+set -o nounset
 
-# Save PWD
-OLD_PWD=$PWD
+ADDITIONALVOLUMES=""
+add_volume() {
+  vol=$1
+  export ADDITIONALVOLUMES="$ADDITIONALVOLUMES -v ${PWD}/${vol}:/opt/development/${vol}"
+}
 
-if [ ! -d /opt/development ]
-then
-  echo "/opt/development needs to be mounted!"
-  exit -1
-fi
+# Add a volume for every module
+cd modules
+for module in $(ls);
+do
+  add_volume $module
+done
+cd ..
 
-# Replace the /opt/framework link so we get all source code from the mounts
-rm /opt/framework
-ln -s /opt/development /opt/framework
+# Add a volume for docker
+add_volume docker
 
-# Build diablo
-if [ ! -d /build/diablo ]; then
-  mkdir -p /build/diablo
-  cd /build/diablo
-  cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/opt/diablo -DUseInstallPrefixForLinkerScripts=on /opt/framework/diablo
-  make -j$(nproc) install
-fi
-
-# Start the actual shell
-cd $OLD_PWD
-bash
+# Run development startup script
+docker-compose run ${ADDITIONALVOLUMES} actc /opt/development/docker/actc/development.sh

@@ -27,7 +27,7 @@ RUN \
   apt-get install -y binutils-multiarch gcc-multilib zlib1g:i386 && \
   # ACTC \
   apt-get install -y binutils-dev libmysqlclient-dev libwebsockets-dev mysql-client openjdk-8-jre-headless python python-pip && \
-  pip install doit==0.29.0 && \
+  pip install doit==0.29.0 uwsgi && \
   # Development \
   apt-get install -y bison cmake flex gdb
 
@@ -43,6 +43,10 @@ RUN mkdir -p /opt/framework_buildtime && ln -s /opt/framework_buildtime /opt/fra
 COPY modules/ /opt/framework/
 COPY docker/actc/install_modules.sh /tmp/
 RUN /tmp/install_modules.sh
+
+# Install the uwsgi service
+COPY docker/actc/service/ /opt/service/
+CMD ["uwsgi", "--ini", "/opt/service/uwsgi.ini"]
 
 # Clean up
 RUN rm -rf /tmp/*
