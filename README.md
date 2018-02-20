@@ -38,7 +38,7 @@ The only files that are not built inside containers are:
 
 * The patched binary tool chains. These can be rebuilt from source by cloning
 Diablo's toolchains repository located at
-[https://github.com/diablo-rewriter/toolchains](https://github.com/diablo-rewriter/toolchains)
+[https://github.com/csl-ugent/toolchains](https://github.com/csl-ugent/toolchains)
 and following the instructions in the `README.MD` file.
 * Versions of the OpenSSL, libwebsockets and libcurl libraries that have been
 built with Diablo-compatible tool chains. These can be rebuilt from source by
