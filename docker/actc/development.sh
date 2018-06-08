@@ -26,5 +26,4 @@ fi
 
 # Start the actual shell
 cd $OLD_PWD
-uwsgi --ini /opt/service/uwsgi.ini &
 bash

@@ -20,5 +20,7 @@ cd ..
 # Add a volume for docker
 add_volume docker
 
-# Run development startup script
-docker-compose run ${ADDITIONALVOLUMES} actc /opt/development/docker/actc/development.sh
+# Start the ACTC container with extra volumes, then enter the development shell.
+container_name=$(docker-compose run -d ${ADDITIONALVOLUMES} actc)
+docker exec --interactive --tty ${container_name} /opt/development/docker/actc/development.sh
+docker stop ${container_name} > /dev/null
