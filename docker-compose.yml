@@ -9,6 +9,7 @@ services:
       - portal
       - ra_manager
       - renewability_manager
+    privileged: true
     security_opt:
       - seccomp=unconfined # Allow gdb debugging
     volumes:
@@ -17,12 +18,14 @@ services:
       - "online_backends:/opt/online_backends"
       - "root_home:/root"
     working_dir: "/projects"
+    deploy:
+      resources:
+        limits:
+          memory: 10g
   mysql:
     environment:
       - MYSQL_ROOT_PASSWORD=aspire
     image: mysql:5.5
-    ports:
-      - "3306:3306"
     # Set up databases.
     volumes:
       - "./modules/remote_attestation/setup/:/docker-entrypoint-initdb.d/remote_attestation"

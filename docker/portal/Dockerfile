@@ -1,7 +1,7 @@
 FROM tiangolo/uwsgi-nginx:python2.7
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y libmysqlclient-dev
+RUN apt-get update && apt-get install -y default-libmysqlclient-dev
 
 # Dirty hack: the portal is supposed to run binaries for remote attestation that have been built
 # by the actc docker. These binaries are dynamically linked and depend on libmysqclient20, but
