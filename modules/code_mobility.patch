@@ -1,0 +1,24 @@
+diff --git a/scripts/deploy_application.sh b/scripts/deploy_application.sh
+index 40d50ff..e496963 100755
+--- a/scripts/deploy_application.sh
++++ b/scripts/deploy_application.sh
+@@ -2,6 +2,7 @@
+ 
+ APPLICATION_ID=""
+ MOBILE_BLOCKS_PATH=$7
++DIRECTORY_MASK=$8
+ 
+ while getopts "a:p:i:" opt
+ do
+@@ -41,6 +42,11 @@ rm -rf ${TARGET_PATH}/*
+ count=0
+ for f in $( ls $MOBILE_BLOCKS_PATH )
+ do
++    # skip paths that don't match the mask, if specified
++	if [ ! -z "$DIRECTORY_MASK" ] && ! echo "$f" | egrep "$DIRECTORY_MASK" > /dev/null; then
++		continue
++	fi
++
+     target=${TARGET_PATH}/$( printf "%08x" ${count} )
+     cp -r ${MOBILE_BLOCKS_PATH}/${f} ${target}
+     echo $f > ${target}/source.txt
