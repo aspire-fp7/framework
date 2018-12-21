@@ -27,6 +27,8 @@ if [ $(hostname) == "pegasus.elis.ugent.be" ]; then
 fi
 export ADDITIONALVOLUMES="$ADDITIONALVOLUMES -v $datapath:/data"
 
-# Run development startup script
+# Start the ACTC container with extra volumes, then enter the development shell.
 xhost +local:root;
-docker-compose run -e DISPLAY=${DISPLAY} -v /tmp/.X11-unix:/tmp/.X11-unix ${ADDITIONALVOLUMES} actc /opt/development/docker/actc/development.sh
+container_name=$(docker-compose run -d -e DISPLAY=${DISPLAY} -v /tmp/.X11-unix:/tmp/.X11-unix ${ADDITIONALVOLUMES} actc)
+docker exec --interactive --tty -e DISPLAY=${DISPLAY} ${container_name} /opt/development/docker/actc/development.sh
+docker stop ${container_name} > /dev/null

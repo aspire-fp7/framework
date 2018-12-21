@@ -1,6 +1,6 @@
 [submodule "diablo"]
 	path = modules/diablo
-	url = https://github.com/diablo-rewriter/diablo
+	url = https://github.com/csl-ugent/diablo
 [submodule "code-mobility"]
 	path = modules/code_mobility
 	url = https://github.com/uel-aspire-fp7/code-mobility.git

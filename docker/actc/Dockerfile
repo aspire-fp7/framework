@@ -15,7 +15,7 @@ RUN \
   make -j$(nproc) install
 
 # Actual docker image
-FROM ubuntu:16.04
+FROM tiangolo/uwsgi-nginx:python2.7
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN \
@@ -24,10 +24,10 @@ RUN \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get update && \
   apt-get install -y htop man ssh vim wget && \
-  apt-get install -y binutils-multiarch gcc-multilib zlib1g:i386 && \
+  apt-get install -y binutils-multiarch gcc-multilib gfortran zlib1g:i386 && \
   # ACTC \
-  apt-get install -y binutils-dev libmysqlclient-dev libwebsockets-dev mysql-client openjdk-8-jre-headless python python-pip && \
-  pip install doit==0.29.0 uwsgi && \
+  apt-get install -y binutils-dev default-libmysqlclient-dev libwebsockets-dev mysql-client openjdk-8-jre-headless python python-pip && \
+  pip install doit==0.29.0 && \
   # Development \
   apt-get install -y bison cmake flex gdb
 
@@ -44,9 +44,8 @@ COPY modules/ /opt/framework/
 COPY docker/actc/install_modules.sh /tmp/
 RUN /tmp/install_modules.sh
 
-# Install the uwsgi service
-COPY docker/actc/service/ /opt/service/
-CMD ["uwsgi", "--ini", "/opt/service/uwsgi.ini"]
+# Install the app
+COPY docker/actc/service/ /app
 
 # Clean up
 RUN rm -rf /tmp/*

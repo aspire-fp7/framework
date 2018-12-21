@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/actc/Dockerfile
+    expose:
+      - "80"
     links:
       - mysql
       - portal
@@ -26,6 +28,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=aspire
     image: mysql:5.5
+    expose:
+      - "3306"
     # Set up databases.
     volumes:
       - "./modules/remote_attestation/setup/:/docker-entrypoint-initdb.d/remote_attestation"
