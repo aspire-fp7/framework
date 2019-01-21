@@ -12,8 +12,8 @@ if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
 then
   cd modules/
   MODULES_DIR=$PWD
-  git clone https://github.ugent.be/SysLab/anti-debugging.git anti_debugging
+  git clone https://github.com/csl-ugent/anti-debugging.git anti_debugging
   cd anti_debugging
-  git checkout 18461ad3dd4d5eb75d4f04813962e95cce1a74b6
+  git checkout 266e209f17ce66ce7728be6b2f185850fa6593fe
   cp diablo/* $MODULES_DIR/diablo/aspire/self_debugging/
 fi
