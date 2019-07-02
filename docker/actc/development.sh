@@ -26,4 +26,4 @@ fi
 
 # Start the actual shell
 cd $OLD_PWD
-bash
+tail -f /dev/null

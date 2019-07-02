@@ -30,5 +30,4 @@ export ADDITIONALVOLUMES="$ADDITIONALVOLUMES -v $datapath:/data"
 # Start the ACTC container with extra volumes, then enter the development shell.
 xhost +local:root;
 container_name=$(docker-compose run -d -e DISPLAY=${DISPLAY} -v /tmp/.X11-unix:/tmp/.X11-unix ${ADDITIONALVOLUMES} actc)
-docker exec --interactive --tty -e DISPLAY=${DISPLAY} ${container_name} /opt/development/docker/actc/development.sh
-docker stop ${container_name} > /dev/null
+docker exec -d --interactive --tty -e DISPLAY=${DISPLAY} ${container_name} /opt/development/docker/actc/development.sh

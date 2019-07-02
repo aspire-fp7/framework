@@ -6,8 +6,8 @@ RUN apt-get update && apt-get install -y default-libmysqlclient-dev
 # Dirty hack: the portal is supposed to run binaries for remote attestation that have been built
 # by the actc docker. These binaries are dynamically linked and depend on libmysqclient20, but
 # only libmysqclient18 is available on this docker. We thus install it from unstable..
-COPY docker/portal/unstable.list /etc/apt/sources.list.d/
-RUN apt-get update && apt-get -t unstable install -y libmysqlclient20
+#COPY docker/portal/unstable.list /etc/apt/sources.list.d/
+#RUN apt-get update && apt-get -t unstable install -y libmysqlclient20
 
 # Build code mobility components
 COPY modules/code_mobility /tmp/code_mobility
