@@ -1,9 +1,10 @@
 [submodule "diablo"]
 	path = modules/diablo
-	url = https://github.com/csl-ugent/diablo
+  url = https://github.com/csl-ugent/diablo
+  branch = oisp
 [submodule "code-mobility"]
 	path = modules/code_mobility
-	url = https://github.com/uel-aspire-fp7/code-mobility.git
+  url = https://github.com/uel-aspire-fp7/code-mobility.git
 [submodule "ascl"]
 	path = modules/ascl
 	url = https://github.com/uel-aspire-fp7/ascl.git
@@ -15,7 +16,8 @@
 	url = https://github.com/aspire-fp7/annotation_extractor.git
 [submodule "code-guards"]
 	path = modules/code_guards
-	url = https://github.com/aspire-fp7/code-guards
+  url = https://github.com/aspire-fp7/code-guards
+  branch = oisp
 [submodule "renewability"]
 	path = modules/renewability
 	url = https://github.com/uel-aspire-fp7/renewability
@@ -25,3 +27,4 @@
 [submodule "actc"]
 	path = modules/actc
 	url = https://github.com/aspire-fp7/actc
+  branch = oisp
