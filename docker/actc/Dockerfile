@@ -15,7 +15,7 @@ RUN \
   make -j$(nproc) install
 
 # Actual docker image
-FROM tiangolo/uwsgi-nginx:python2.7
+FROM debian:stretch
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN \
@@ -28,6 +28,8 @@ RUN \
   # ACTC \
   apt-get install -y binutils-dev default-libmysqlclient-dev libwebsockets-dev mysql-client openjdk-8-jre-headless python python-pip && \
   pip install doit==0.29.0 && \
+  # UWSGI interface \
+  apt-get install -y uwsgi-plugin-python && \
   # Development \
   apt-get install -y bison cmake flex gdb
 
@@ -44,8 +46,9 @@ COPY modules/ /opt/framework/
 COPY docker/actc/install_modules.sh /tmp/
 RUN /tmp/install_modules.sh
 
-# Install the app
-COPY docker/actc/service/ /app
+# Install the UWSGI service
+COPY docker/actc/service/ /opt/service
+CMD [ "uwsgi", "--http-socket", ":80", "--ini", "/opt/service/uwsgi.ini" ]
 
 # Clean up
 RUN rm -rf /tmp/*
