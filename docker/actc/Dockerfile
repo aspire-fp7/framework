@@ -5,7 +5,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Install the required packages
 RUN \
   apt-get update && \
-  apt-get install -y bison build-essential cmake flex
+  apt-get install -y bison build-essential cmake flex g++-multilib
 
 COPY modules/diablo /tmp/diablo/
 RUN \
@@ -31,7 +31,7 @@ RUN \
   # UWSGI interface \
   apt-get install -y uwsgi-plugin-python && \
   # Development \
-  apt-get install -y bison cmake flex gdb
+  apt-get install -y bison cmake flex g++-multilib gdb
 
 # Install the prebuilts
 COPY docker/actc/install_prebuilts.sh docker/actc/patch_gcc.sh /tmp/
